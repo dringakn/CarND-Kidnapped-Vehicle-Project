@@ -131,6 +131,7 @@ private:
   static std::normal_distribution<double> normDistX;
   static std::normal_distribution<double> normDistY;
   static std::normal_distribution<double> normDistTheta;
+
 };
 
 #endif // PARTICLE_FILTER_H_

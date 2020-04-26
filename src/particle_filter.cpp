@@ -21,6 +21,13 @@
 using std::string;
 using std::vector;
 
+// Static members definations
+std::default_random_engine ParticleFilter::rng;
+std::normal_distribution<double> ParticleFilter::normDistX;
+std::normal_distribution<double> ParticleFilter::normDistY;
+std::normal_distribution<double> ParticleFilter::normDistTheta;
+
+
 void ParticleFilter::init(double x, double y, double theta, double std[])
 {
   /**
@@ -33,7 +40,12 @@ void ParticleFilter::init(double x, double y, double theta, double std[])
    */
   num_particles = 200;             // Set the number of particles
   particles.resize(num_particles); // Change the number of particles
-  weights.resize(num_particles);   // Change the number of weights
+  weights.resize(num_particles);   // Change the number of
+  // Normal/Gaussian noise generators for the particles
+  normDistX.param(std::normal_distribution<double>(x, std[0]).param());
+  normDistY.param(std::normal_distribution<double>(y, std[1]).param());
+  normDistTheta.param(std::normal_distribution<double>(theta, std[2]).param());
+}
 
 void ParticleFilter::prediction(double delta_t, double std_pos[],
                                 double velocity, double yaw_rate)
