@@ -126,10 +126,11 @@ private:
 
   // Create a randomg number generator and 
   // Three different Gaussian distributions (mu, std)
-  std::default_random_engine rng;
-  std::normal_distribution<double> normDistX;
-  std::normal_distribution<double> normDistY;
-  std::normal_distribution<double> normDistTheta;
+  // These are created static because, doesn't varies for each particle
+  static std::default_random_engine rng;
+  static std::normal_distribution<double> normDistX;
+  static std::normal_distribution<double> normDistY;
+  static std::normal_distribution<double> normDistTheta;
 };
 
 #endif // PARTICLE_FILTER_H_
