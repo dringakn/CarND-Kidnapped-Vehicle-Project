@@ -7,21 +7,17 @@
 
 # Overview
 
-The goal of this project is to localize the car which has lost it's position estimate for a while (Kidnapped robot problem). The car has a map of this location, a (noisy) GPS estimate of its initial location, and lots of (noisy) sensor and control data. The solution is implemented using a 2D a particle filter algorithm using C++. For the implementation the reader may refer ![particle_filter.cpp][Code] within the `src` directory.
+The goal of this project is to localize a car, using a particle filter, which has lost it's position estimate for a while (kidnapped robot problem). The car has a map of it's location, a (noisy) GPS estimate of its initial location, and lots of (noisy) sensor and control data. The localization is implemented using a 2D a particle filter algorithm using a C++ program. For the code implementation the reader may refer ![particle_filter.cpp][Code] within the `src` directory.
 
 ![Example][video1]
 
-The particle filter algorithm can be considered as a monte carlo simulation, where a number of guess poses have been first initialized. Each guess pose has a associated weight, which depends on the vehicle sensor measurements. The higher the probability to acquire the recieved measurement, the higher is the weight. All those poses which has less weights are filtered using a resampling step.
-
-**The Map**
-
-`map_data.txt` includes the position of landmarks (in meters) on an arbitrary Cartesian coordinate system. Each row has three columns
+Particle filter algorithm can be considered as a Monte Carlo simulation, where a number of guess poses for the car position and orientation have been used. Each guess pose has a associated weight, which depends on the car's observations. The higher the observation match with car's guess pose, the higher is the weight of the corresponding particle. All those poses which has less weights are finally filtered using a resampling step. The map of the car is implemented using data inside `map_data.txt` file. It includes the position of landmarks (in meters) on an arbitrary Cartesian coordinate system. Each row has three columns
 1. x position
 2. y position
 3. landmark id
    
 ## Running the Code
-This project involves the Simulator which can be downloaded [here][(https://github.com/udacity/self-driving-car-sim/releases)]
+This project involves the Simulator which can be downloaded [here][(https://github.com/udacity/self-driving-car-sim/releases)]. After cloning the project the user can use the follwing commands for compilation and exectuion of the program.
 
 1. mkdir build
 2. cd build
