@@ -27,24 +27,26 @@ std::normal_distribution<double> ParticleFilter::normDistX;
 std::normal_distribution<double> ParticleFilter::normDistY;
 std::normal_distribution<double> ParticleFilter::normDistTheta;
 
-
 void ParticleFilter::init(double x, double y, double theta, double std[])
 {
-  /**
-   * TODO: Set the number of particles. Initialize all particles to 
-   *   first position (based on estimates of x, y, theta and their uncertainties
-   *   from GPS) and all weights to 1. 
-   * TODO: Add random Gaussian noise to each particle.
-   * NOTE: Consult particle_filter.h for more information about this method 
-   *   (and others in this file).
-   */
   num_particles = 200;             // Set the number of particles
   particles.resize(num_particles); // Change the number of particles
   weights.resize(num_particles);   // Change the number of
-  // Normal/Gaussian noise generators for the particles
+  // Initialize Normal/Gaussian noise generators for the particles
   normDistX.param(std::normal_distribution<double>(x, std[0]).param());
   normDistY.param(std::normal_distribution<double>(y, std[1]).param());
   normDistTheta.param(std::normal_distribution<double>(theta, std[2]).param());
+
+  // Initialize position (based on estimates of x, y, theta and their uncertainties from GPS) and all weights to 1.
+  for (int i = 0; i < num_particles; i++)
+  {
+    particles[i].id = i;
+    particles[i].x = normDistX(rng);
+    particles[i].y = normDistY(rng);
+    particles[i].theta = normDistTheta(rng);
+    particles[i].weight = weights[i] = 1;
+  }
+  is_initialized = true;
 }
 
 void ParticleFilter::prediction(double delta_t, double std_pos[],
