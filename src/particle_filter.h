@@ -9,13 +9,13 @@
 #ifndef PARTICLE_FILTER_H_
 #define PARTICLE_FILTER_H_
 
+#include <random>
 #include <string>
 #include <vector>
-#include "helper_functions.h"
-#include <random>
 
-struct Particle
-{
+#include "helper_functions.h"
+
+struct Particle {
   int id;
   double x;
   double y;
@@ -26,9 +26,8 @@ struct Particle
   std::vector<double> sense_y;
 };
 
-class ParticleFilter
-{
-public:
+class ParticleFilter {
+ public:
   // Constructor
   // @param num_particles Number of particles
   ParticleFilter() : num_particles(0), is_initialized(false) {}
@@ -42,7 +41,7 @@ public:
    * @param x Initial x position [m] (simulated estimate from GPS)
    * @param y Initial y position [m]
    * @param theta Initial orientation [rad]
-   * @param std[] Array of dimension 3 [standard deviation of x [m], 
+   * @param std[] Array of dimension 3 [standard deviation of x [m],
    *   standard deviation of y [m], standard deviation of yaw [rad]]
    */
   void init(double x, double y, double theta, double std[]);
@@ -51,7 +50,7 @@ public:
    * prediction Predicts the state for the next time step
    *   using the process model.
    * @param delta_t Time between time step t and t+1 in measurements [s]
-   * @param std_pos[] Array of dimension 3 [standard deviation of x [m], 
+   * @param std_pos[] Array of dimension 3 [standard deviation of x [m],
    *   standard deviation of y [m], standard deviation of yaw [rad]]
    * @param velocity Velocity of car from t to t+1 [m/s]
    * @param yaw_rate Yaw rate of car from t to t+1 [rad/s]
@@ -60,7 +59,7 @@ public:
                   double yaw_rate);
 
   /**
-   * dataAssociation Finds which observations correspond to which landmarks 
+   * dataAssociation Finds which observations correspond to which landmarks
    *   (likely by using a nearest-neighbors data association).
    * @param predicted Vector of predicted landmark observations
    * @param observations Vector of landmark observations
@@ -70,7 +69,7 @@ public:
 
   /**
    * updateWeights Updates the weights for each particle based on the likelihood
-   *   of the observed measurements. 
+   *   of the observed measurements.
    * @param sensor_range Range [m] of sensor
    * @param std_landmark[] Array of dimension 2
    *   [Landmark measurement uncertainty [x [m], y [m]]]
@@ -90,7 +89,7 @@ public:
   /**
    * Set a particles list of associations, along with the associations'
    *   calculated world x,y coordinates
-   * This can be a very useful debugging tool to make sure transformations 
+   * This can be a very useful debugging tool to make sure transformations
    *   are correct and assocations correctly connected
    */
   void SetAssociations(Particle &particle, const std::vector<int> &associations,
@@ -100,10 +99,7 @@ public:
   /**
    * initialized Returns whether particle filter is initialized yet or not.
    */
-  const bool initialized() const
-  {
-    return is_initialized;
-  }
+  const bool initialized() const { return is_initialized; }
 
   /**
    * Used for obtaining debugging information related to particles.
@@ -114,7 +110,7 @@ public:
   // Set of current particles
   std::vector<Particle> particles;
 
-private:
+ private:
   // Number of particles to draw
   int num_particles;
 
@@ -124,14 +120,13 @@ private:
   // Vector of weights of all particles
   std::vector<double> weights;
 
-  // Create a randomg number generator and 
+  // Create a randomg number generator and
   // Three different Gaussian distributions (mu, std)
   // These are created static because, doesn't varies for each particle
   static std::default_random_engine rng;
   static std::normal_distribution<double> normDistX;
   static std::normal_distribution<double> normDistY;
   static std::normal_distribution<double> normDistTheta;
-
 };
 
-#endif // PARTICLE_FILTER_H_
+#endif  // PARTICLE_FILTER_H_
