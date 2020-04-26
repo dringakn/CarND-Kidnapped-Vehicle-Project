@@ -7,9 +7,9 @@
 
 # Overview
 
-![Example][video1]
-
 The goal of this project is to localize the car which has lost it's position estimate for a while (Kidnapped robot problem). The car has a map of this location, a (noisy) GPS estimate of its initial location, and lots of (noisy) sensor and control data. The solution is implemented using a 2D a particle filter algorithm using C++. For the implementation the reader may refer ![particle_filter.cpp][Code] within the `src` directory.
+
+![Example][video1]
 
 The particle filter algorithm can be considered as a monte carlo simulation, where a number of guess poses have been first initialized. Each guess pose has a associated weight, which depends on the vehicle sensor measurements. The higher the probability to acquire the recieved measurement, the higher is the weight. All those poses which has less weights are filtered using a resampling step.
 
